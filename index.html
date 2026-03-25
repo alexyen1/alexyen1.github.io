@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alexander Yen's Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f2f2f2;
+      --ink: #0a0a0a;
+      --ink-muted: #666666;
+      --accent-light: #eeeeee;
+      --line: #e0e0e0;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 3rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      animation: fadeDown 0.6s ease both;
+    }
+    .nav-logo {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    #hero {
+      display: flex; flex-direction: column; justify-content: flex-start;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+    }
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      background: var(--accent-light);
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      margin-bottom: 1.5rem;
+      border-radius: 2px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-name {
+      font-family: var(--sans);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      animation: fadeUp 0.7s 0.35s ease both;
+    }
+    .hero-name span {
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+    .hero-sub {
+      margin-top: 1.5rem;
+      max-width: 480px;
+      color: var(--ink-muted);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; margin-top: 2.5rem;
+      animation: fadeUp 0.7s 0.65s ease both;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: var(--ink); color: #fff; }
+    .btn-primary:hover { background: #333; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
+    }
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--line);
+    }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; max-width: 80px;
+      height: 1px; background: var(--line);
+    }
+    .section-title {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 3rem;
+      color: var(--ink);
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-grid { display: grid; gap: 0; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--line); }
+    .exp-date { font-size: 0.72rem; color: var(--ink-muted); padding-top: 0.2rem; }
+    .exp-role {
+      font-family: var(--sans);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .exp-company { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 0.75rem; }
+    .exp-desc {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      max-width: 600px;
+      list-style: none;
+    }
+    .exp-desc li {
+      padding: 0.2rem 0 0.2rem 1rem;
+      position: relative;
+    }
+    .exp-desc li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-muted);
+    }
+
+    /* ── SKILLS ── */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+    .skill-group {
+      background: var(--bg);
+      padding: 1.75rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .skill-group-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-list li:empty { display: none; }
+    .skill-list li:last-child { border-bottom: none; }
+    .skill-list li::before { content: '▸'; color: var(--ink-muted); font-size: 0.6rem; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+    .project-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .project-card:hover { background: var(--surface); }
+    .project-num {
+      font-size: 0.65rem;
+      color: var(--line);
+      font-family: var(--sans);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .project-title {
+      font-family: var(--sans);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+    .project-desc { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      background: var(--accent-light);
+      color: var(--ink);
+      border-radius: 2px;
+    }
+    .project-link {
+      display: block;
+      margin-top: 1.25rem;
+      font-size: 0.72rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* ── COURSEWORK ── */
+    .coursework-intro {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+    .course-card {
+      background: var(--bg);
+      padding: 1.75rem;
+      transition: background 0.2s;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .course-card:hover { background: var(--surface); }
+    .course-code {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.4rem;
+    }
+    .course-name {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .course-desc { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-lead {
+      font-family: var(--sans);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .contact-sub {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 1.8;
+      max-width: 360px;
+    }
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .contact-list li:first-child { border-top: 1px solid var(--line); }
+    .contact-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-light);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .contact-info-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.15rem;
+    }
+    .contact-info-value {
+      font-size: 0.85rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-info-value:hover { color: var(--ink-muted); text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-left { font-size: 0.75rem; color: var(--ink-muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.72rem;
+      text-decoration: none;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .projects-grid, .course-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-layout { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .projects-grid, .course-grid, .skills-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#coursework">Coursework</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-tag">Open to Opportunities</div>
+    <h1 class="hero-name">Alexander<br><span>Yen.</span></h1>
+    <p class="hero-sub">
+      Cybersecurity-focused Computer Science student at the University of Michigan.
+      Experienced in SIEM, endpoint security, threat detection, and network intrusion analysis.
+      Building resilient systems and hunting threats.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="resume.pdf" class="btn btn-ghost" download>Download Résumé</a>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Where I've<br>worked.</h2>
+    <div class="exp-grid">
+
+      <div class="exp-item">
+        <div class="exp-date">May 2025 — Aug 2025</div>
+        <div>
+          <div class="exp-role">IT Intern</div>
+          <div class="exp-company">Alliance Catholic Credit Union · Farmington Hills, MI</div>
+          <ul class="exp-desc">
+            <li>Monitored and analyzed security events across 350+ endpoints using SIEM and endpoint management tools.</li>
+            <li>Managed asset inventory and compliance, ensuring patching and security update enforcement.</li>
+            <li>Diagnosed and resolved hardware and software issues across operating systems, applications, and device performance.</li>
+            <li>Streamlined OS imaging of laptops and tablets by automating configuration steps, improving deployment efficiency by 100%.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">Aug 2024 — May 2026</div>
+        <div>
+          <div class="exp-role">Software Member</div>
+          <div class="exp-company">Michigan Mars Rover Team · Ann Arbor, MI</div>
+          <ul class="exp-desc">
+            <li>Designed and integrated autonomous rover subsystems in collaboration with mechanical and software teams for extraterrestrial operation.</li>
+            <li>Developed a Python computer vision system enabling the rover to recognize and interpret keyboard keys.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">Sep 2022 — Apr 2023</div>
+        <div>
+          <div class="exp-role">Research Assistant</div>
+          <div class="exp-company">University of Michigan · Ann Arbor, MI</div>
+          <ul class="exp-desc">
+            <li>Developed an inclusive sexual education curriculum for adolescents with physical disabilities.</li>
+            <li>Led in-depth interviews with coaches and athletes on the Michigan Adaptive Sports Team to ensure the program addressed the target audience's specific needs.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">What I<br>know.</h2>
+    <div class="skills-layout">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Security</div>
+        <ul class="skill-list">
+          <li>Endpoint Security</li>
+          <li>SIEM</li>
+          <li>Incident Response</li>
+          <li>Threat Detection</li>
+          <li>Network Intrusion Detection</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Networking</div>
+        <ul class="skill-list">
+          <li>Packet Analysis</li>
+          <li>TCP/IP</li>
+          <li>Port Scan Detection</li>
+          <li>MITRE ATT&amp;CK</li>
+          <li>Linux</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Programming</div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>JavaScript</li>
+          <li>SQL</li>
+          <li>C++</li>
+          <li>REST APIs</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Certifications & Awards</div>
+        <ul class="skill-list">
+          <li>CompTIA Security+</li>
+          <li>Google Cybersecurity Certificate</li>
+          <li>President's Volunteer Service Award</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Things I've<br>built.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <span class="project-num">01</span>
+        <div class="project-title">Network Intrusion Detector</div>
+        <p class="project-desc">Built a Python-based network intrusion detector using packet capture to identify port scans and SYN bursts. Implemented stateful per-source tracking and alert throttling to reduce noise. Mapped alerts to MITRE ATT&CK techniques and exported to JSON for SIEM-style analysis.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">TCP/IP</span>
+          <span class="tag">Linux</span>
+          <span class="tag">MITRE ATT&CK</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">02</span>
+        <div class="project-title">Instagram Clone</div>
+        <p class="project-desc">Developed a full-stack web application simulating Instagram's core functionalities — user authentication, profile management, photo uploads, likes, and comments. Designed and optimized SQL databases to efficiently manage user data and interactions.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">03</span>
+        <div class="project-title">Hand Sign Identifier</div>
+        <p class="project-desc">Implemented landmark extraction, gesture matching, and on-screen feedback enabling real-time recognition of hand signs through distance-based classification and OpenCV visualization.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">AI</span>
+          <span class="tag">OpenCV</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COURSEWORK -->
+  <section id="coursework">
+    <div class="section-label">Coursework</div>
+    <h2 class="section-title">What I've<br>studied.</h2>
+    <p class="coursework-intro">
+      Relevant academic coursework from my Computer Science degree at the University of Michigan.
+    </p>
+    <div class="course-grid">
+
+      <div class="course-card">
+        <div class="course-code">EECS 388</div>
+        <div class="course-name">Introduction to Computer Security</div>
+        <p class="course-desc">Threat modeling, cryptography, web security, network attacks, and software vulnerabilities including buffer overflows and SQL injection.</p>
+      </div>
+
+      <div class="course-card">
+        <div class="course-code">EECS 489</div>
+        <div class="course-name">Computer Networks</div>
+        <p class="course-desc">TCP/IP protocols, routing algorithms, network architecture, packet analysis, and the design principles behind reliable and secure data transmission.</p>
+      </div>
+
+      <div class="course-card">
+        <div class="course-code">EECS 445</div>
+        <div class="course-name">Introduction to Machine Learning</div>
+        <p class="course-desc">Supervised and unsupervised learning, neural networks, classification, regression, and the mathematical foundations behind modern ML systems.</p>
+      </div>
+
+      <div class="course-card">
+        <div class="course-code">EECS 484</div>
+        <div class="course-name">Database Management Systems</div>
+        <p class="course-desc">Relational databases, SQL, query optimization, and database security including injection prevention and access control design.</p>
+      </div>
+
+      <div class="course-card">
+        <div class="course-code">EECS 485</div>
+        <div class="course-name">Web Systems</div>
+        <p class="course-desc">Full-stack web development, scalable systems, REST APIs, databases, and web security concepts including authentication and common attack vectors.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-wrapper">
+      <ul class="contact-list">
+        <li>
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            alexyen@umich.edu
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">in</div>
+          <div>
+            <div class="contact-info-label">LinkedIn</div>
+            <a href="https://www.linkedin.com/in/alexander-yen-629b5227a" target="_blank" class="contact-info-value">linkedin.com/in/alexander-yen-629b5227a</a>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">☎</div>
+          <div>
+            <div class="contact-info-label">Phone</div>
+            <a href="tel:+12486600168" class="contact-info-value">248-660-0168</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
